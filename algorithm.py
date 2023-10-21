@@ -31,26 +31,38 @@ class Matrix:
             for i in range(1, len(self.seq1)):
                 self.matrix[i, 0] = self.matrix[i-1, 0] + self.insertion
 
+            
         def body():
-            for i in range(
-                (len(self.seq1) - 1 ) * (len(self.seq2) - 1)
-                ):
-                x, y = 1, 1
-                up = self.matrix[x, y+1] + self.insertion
-                left = self.matrix[x+1, y] + self.insertion
-                dgnl = self.matrix[x, y] + (self.match if self.seq1[y+1] == self.seq2[x+1] else self.dismatch)
+            row, column = 1, 1
+            for i in self.matrix[1:, 1:]:
+                for j in i:
+                    print(row, column, sep=":")
+                    print(table)
+                    up = self.matrix[row, column-1]
+                    left = self.matrix[row-1, column]
+                    dgnl = self.matrix[row-1, column-1]
+                    print(f'max is: {max(dgnl, left, up)}')
+                    if dgnl == max(dgnl, up, left):
+                        if self.seq1[row] == self.seq2[column]:
+                            self.matrix[row, column] = dgnl + self.match
+                        else:
+                            self.matrix[row, column] = dgnl + self.dismatch
+                    elif left == max(dgnl, up, left):
+                        self.matrix[row, column] = self.matrix[row-1, column] + self.insertion
+                    elif up == max(dgnl, up, left):
+                        self.matrix[row, column] = self.matrix[row, column-1] + self.insertion
 
-                self.matrix[x+1, y+1] = max(up, left, dgnl)
-                x += 1
-                y += 1
-                print(self)
+                    column += 1
+                    print(table, '\n', '-------------')
+                    
+                
+                row += 1
+                column = 1
+
+
 
         return first_fill(), body()
 
+
 table = Matrix(seq1="ACTG", seq2="ACG", match=2, dismatch=-1, insertion=-2)
 table.algorithm()
-
-print(table)
-
-
-# Алгоритм почти готов, надо нормально настроить индексы x и y
