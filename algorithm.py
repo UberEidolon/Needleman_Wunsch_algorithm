@@ -39,18 +39,15 @@ class Matrix:
             row, column = 1, 1
             for i in self.matrix[1:, 1:]:
                 for j in i:
-                    up = self.matrix[row, column-1]
-                    left = self.matrix[row-1, column]
+                    up = self.matrix[row-1, column] + self.insertion
+                    left = self.matrix[row, column-1] + self.insertion
                     dgnl = self.matrix[row-1, column-1]
-                    if dgnl == max(dgnl, up, left):
-                        if self.seq1[row] == self.seq2[column]:
-                            self.matrix[row, column] = dgnl + self.match
-                        else:
-                            self.matrix[row, column] = dgnl + self.dismatch
-                    elif left == max(dgnl, up, left):
-                        self.matrix[row, column] = self.matrix[row-1, column] + self.insertion
-                    elif up == max(dgnl, up, left):
-                        self.matrix[row, column] = self.matrix[row, column-1] + self.insertion
+                    if self.seq1[row] == self.seq2[column]:
+                        dgnl += self.match
+                    else:
+                        dgnl += self.dismatch
+
+                    self.matrix[row, column] = max(up, left, dgnl)
 
                     column += 1
                 
@@ -59,6 +56,8 @@ class Matrix:
             
             print(table)
 
+        def back(self):
+            pass
 
 
         return first_fill(), body()
