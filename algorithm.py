@@ -1,9 +1,12 @@
 from pandas import DataFrame
 import numpy
+from datetime import datetime
 
 
 # Pandas DataFrame table is using for view algorithm's matrix
 # Numpy is using for work with matrix data
+start = datetime.now()
+
 
 class Matrix:
     def __init__(self, seq1: str, seq2: str, match: int, dismatch:int, insertion: int) -> None:
@@ -36,12 +39,9 @@ class Matrix:
             row, column = 1, 1
             for i in self.matrix[1:, 1:]:
                 for j in i:
-                    print(row, column, sep=":")
-                    print(table)
                     up = self.matrix[row, column-1]
                     left = self.matrix[row-1, column]
                     dgnl = self.matrix[row-1, column-1]
-                    print(f'max is: {max(dgnl, left, up)}')
                     if dgnl == max(dgnl, up, left):
                         if self.seq1[row] == self.seq2[column]:
                             self.matrix[row, column] = dgnl + self.match
@@ -53,16 +53,18 @@ class Matrix:
                         self.matrix[row, column] = self.matrix[row, column-1] + self.insertion
 
                     column += 1
-                    print(table, '\n', '-------------')
-                    
                 
                 row += 1
                 column = 1
+            
+            print(table)
 
 
 
         return first_fill(), body()
 
 
-table = Matrix(seq1="ACTG", seq2="ACG", match=2, dismatch=-1, insertion=-2)
+table = Matrix(seq2="TGCAGTAG", seq1="ATCACAG", match=2, dismatch=-1, insertion=-2)
 table.algorithm()
+
+print(datetime.now() - start)
