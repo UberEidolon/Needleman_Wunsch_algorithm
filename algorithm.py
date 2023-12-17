@@ -17,7 +17,6 @@ class Matrix:
 
     def __str__(self) -> str:
         self.level_out()
-        # print(''.join(str(''.join(j for j in i) + '\n') for i in self.seqs))
         
         return ''.join(str(''.join(j for j in i) + '\n') for i in self.level_out())
     
