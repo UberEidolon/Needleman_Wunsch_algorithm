@@ -11,7 +11,7 @@ class Rand_seqs_pair:
 		self.ins_chance = ins_chance
 		self.del_chance = del_chance
 
-		# We define chances of replacement, inseriton and deletion mutations in class arguments. Default is 0.05
+		# We define chances of replacement, insertion and deletion mutations in class arguments. Default is 0.05
 
 	def __str__(self) -> str:
 		return ''.join(str(''.join(j for j in i) + '\n') for i in self.generate_seqs_pair())
